@@ -57,22 +57,22 @@
             overflow-x: hidden;
         }
 
+        /* شاشة الترحيب الخارجية الأولى (باللون الفاتح والهادئ) */
         #welcome-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: linear-gradient(135deg, #52b788 0%, #74c69d 50%, #95d5b2 100%);
+            background: var(--primary-bg);
+            background-image: radial-gradient(var(--border-color) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            text-align: center;
+            z-index: 10000;
             padding: 20px;
-            overflow: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
         #welcome-screen.hidden {
@@ -81,100 +81,184 @@
             pointer-events: none;
         }
 
-        /* خلفية الأشكال المتحركة بسرعة فائقة فور فتح الصفحة */
-        .welcome-bg-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .welcome-bg-shapes span {
-            position: absolute;
-            display: block;
-            list-style: none;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.25);
-            animation: animateShapes 2.2s linear infinite;
-            bottom: -150px;
-            border-radius: 50%;
-        }
-
-        .welcome-bg-shapes span:nth-child(1) { left: 10%; width: 70px; height: 70px; animation-duration: 1.5s; animation-delay: 0s; }
-        .welcome-bg-shapes span:nth-child(2) { left: 25%; width: 30px; height: 30px; animation-duration: 1.8s; animation-delay: 0.2s; }
-        .welcome-bg-shapes span:nth-child(3) { left: 40%; width: 60px; height: 60px; animation-duration: 1.3s; animation-delay: 0.1s; }
-        .welcome-bg-shapes span:nth-child(4) { left: 55%; width: 40px; height: 40px; animation-duration: 1.6s; animation-delay: 0.4s; }
-        .welcome-bg-shapes span:nth-child(5) { left: 70%; width: 80px; height: 80px; animation-duration: 2.0s; animation-delay: 0s; }
-        .welcome-bg-shapes span:nth-child(6) { left: 85%; width: 50px; height: 50px; animation-duration: 1.4s; animation-delay: 0.3s; }
-        .welcome-bg-shapes span:nth-child(7) { left: 20%; width: 45px; height: 45px; animation-duration: 1.7s; animation-delay: 0.5s; }
-        .welcome-bg-shapes span:nth-child(8) { left: 60%; width: 65px; height: 65px; animation-duration: 1.9s; animation-delay: 0.1s; }
-
-        @keyframes animateShapes {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-                border-radius: 20%;
-            }
-            100% {
-                transform: translateY(-1100px) rotate(720deg);
-                opacity: 0;
-                border-radius: 50%;
-            }
-        }
-
         .welcome-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
             padding: 40px 30px;
-            border-radius: 28px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            max-width: 550px;
-            width: 90%;
-            position: relative;
-            z-index: 2;
-            animation: pulseCard 2s infinite alternate;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid var(--gold-accent);
+            animation: cardScale 0.5s ease;
         }
 
-        @keyframes pulseCard {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.02); }
+        @keyframes cardScale {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .welcome-title {
             font-family: 'Amiri', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #2d6a4f;
+            font-size: 2.5rem;
+            color: var(--accent-green);
             margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .welcome-subtitle {
-            font-size: 1.3rem;
-            color: #40916c;
-            margin-bottom: 25px;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.8;
         }
 
         .enter-btn {
-            background: linear-gradient(135deg, #52b788 0%, #2d6a4f 100%);
+            background: var(--accent-green);
             color: white;
             border: none;
-            padding: 14px 42px;
+            padding: 14px 40px;
             font-size: 1.2rem;
             font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(45, 106, 79, 0.3);
+            box-shadow: 0 10px 20px rgba(46, 125, 50, 0.2);
             transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .enter-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(45, 106, 79, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(46, 125, 50, 0.3);
+            opacity: 0.95;
+        }
+
+        /* نافذة الإرشادات والتعريف (تظهر فوراً بعد كبس "الدخول للشجرة") */
+        #info-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        #info-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-card {
+            background: var(--card-bg);
+            padding: 30px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 2px solid var(--border-color);
+            max-width: 550px;
+            width: 100%;
+            position: relative;
+            text-align: right;
+            animation: popupScale 0.4s ease;
+        }
+
+        @keyframes popupScale {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--light-green);
+            color: var(--accent-green);
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--accent-green);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .popup-title {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+
+        .popup-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .popup-instructions {
+            background: var(--light-green);
+            padding: 15px 18px;
+            border-radius: 14px;
+            border-right: 5px solid var(--accent-green);
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .popup-instructions h3 {
+            color: var(--accent-green);
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .popup-instructions ul {
+            list-style-type: '🌿  ';
+            padding-right: 15px;
+        }
+
+        .popup-instructions li {
+            margin-bottom: 6px;
+        }
+
+        .popup-action-btn {
+            display: block;
+            width: 100%;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .popup-action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
 
         .theme-toggle-btn {
@@ -563,23 +647,32 @@
 </head>
 <body>
 
+<!-- 1. شاشة الترحيب الخارجية المحدثة -->
 <div id="welcome-screen">
-    <!-- خلفية تفاعلية متحركة بالأخضر الفاتح الجميل -->
-    <div class="welcome-bg-shapes">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    
     <div class="welcome-card">
-        <h1 class="welcome-title">عائلة الجدين مصطفى ووداد</h1>
-        <p class="welcome-subtitle">شجرة العائلة الكريمة</p>
-        <button class="enter-btn" onclick="enterSite()">دخول الشجرة 🌳</button>
+        <h1 class="welcome-title">أهلاً بكُم</h1>
+        <p class="welcome-subtitle">في شجرة عائلة الجدين مصطفى ووداد 🤍<br>شجرة العائلة الكريمة</p>
+        <button class="enter-btn" onclick="enterSite()">الدخول للشجرة 🌳</button>
+    </div>
+</div>
+
+<!-- 2. نافذة الإرشادات والتعريف -->
+<div id="info-popup">
+    <div class="popup-card">
+        <button class="close-btn" onclick="closePopup()" title="إغلاق">✕</button>
+        <h2 class="popup-title">أهلاً بكُم من جديد</h2>
+        <p class="popup-subtitle">دليلك السريع لتصفح شجرة العائلة بكل سهولة ✨</p>
+        
+        <div class="popup-instructions">
+            <h3>كيف تستخدم هذا الموقع؟</h3>
+            <ul>
+                <li><strong>الانتقال السريع:</strong> يمكنك الضغط على أسماء الفروع في الشريط العلوي لتنتقل مباشرة إلى فرع أي من الأبناء.</li>
+                <li><strong>طي وتوسيع الفروع:</strong> اضغط على عنوان أي فرع لفتح أو طي تفاصيله وأبنائه لتسهيل التصفح.</li>
+                <li><strong>الوضع الليلي:</strong> يمكنك تفعيل وضع الليل والنهار 🌙/☀️ عبر الزر الموجود في أسفل الشاشة.</li>
+            </ul>
+        </div>
+
+        <button class="popup-action-btn" onclick="closePopup()">فهمت، ابدأ التصفح 🌳</button>
     </div>
 </div>
 
@@ -924,6 +1017,13 @@
 
     function enterSite() {
         document.getElementById('welcome-screen').classList.add('hidden');
+        setTimeout(() => {
+            document.getElementById('info-popup').classList.add('active');
+        }, 300);
+    }
+
+    function closePopup() {
+        document.getElementById('info-popup').classList.remove('active');
     }
 
     function toggleTheme() {
